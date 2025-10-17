@@ -1,0 +1,71 @@
+html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Dashboard</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/5.0.0-beta1/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- Inline CSS for Gradient Background -->
+    <style>
+        body {
+            background: linear-gradient(to right, #12c2e9, #c471ed, #f64f59);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h1 class="text-center mb-4">Weather Dashboard</h1>
+                <div class="mb-4">
+                    <input type="text" id="city-search" class="form-control" placeholder="Enter city name">
+                    <button id="fetch-weather" class="btn btn-primary mt-2 w-100">Fetch Weather</button>
+                </div>
+                <div id="weather-display" class="text-center"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.0.0-beta1/js/bootstrap.min.js"></script>
+    <!-- JQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Inline JS for Fetching Weather -->
+    <script>
+        // Replace with actual API call
+        function fetchWeather(city) {
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    resolve({
+                        temperature: Math.floor(Math.random() * 100),
+                        humidity: Math.floor(Math.random() * 100),
+                        conditions: ['Sunny', 'Cloudy', 'Rainy', 'Snowy'][Math.floor(Math.random() * 4)],
+                    });
+                }, 1000);
+            });
+        }
+
+        $('#fetch-weather').click(() => {
+            const city = $('#city-search').val();
+            $('#weather-display').html('<i class="fa fa-spinner fa-spin"></i>');
+            fetchWeather(city).then((weather) => {
+                $('#weather-display').html(`
+                    <h2>${city}</h2>
+                    <div class="card text-dark bg-light mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">Temperature: ${weather.temperature}°C</h5>
+                            <h5 class="card-title">Humidity: ${weather.humidity}%</h5>
+                            <h5 class="card-title">Conditions: ${weather.conditions}</h5>
+                        </div>
+                    </div>
+                `);
+            });
+        });
+    </script>
+</body>
+</html>
